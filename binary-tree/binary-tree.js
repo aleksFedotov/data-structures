@@ -42,7 +42,6 @@ class BinaryTree {
   }
 
   display_keys(node = this.root, level = 0, space = '   ') {
-    console.log(node);
     if (node === null) {
       console.log(space.repeat(level) + 'Ø');
       return;
@@ -53,9 +52,9 @@ class BinaryTree {
       return;
     }
 
-    display_keys(node.right, level + 1, '   ');
+    this.display_keys(node.right, level + 1, '   ');
     console.log(space.repeat(level) + node.key);
-    display_keys(node.left, level + 1, '   ');
+    this.display_keys(node.left, level + 1, '   ');
   }
 
   height(node = this.root) {
@@ -91,8 +90,8 @@ class BinaryTree {
     }
     return [
       node.key,
-      ...this.traverse_in_order(node.left),
-      ...this.traverse_in_order(node.right),
+      ...this.traverse_preorder(node.left),
+      ...this.traverse_preorder(node.right),
     ];
   }
 
@@ -101,14 +100,55 @@ class BinaryTree {
       return [];
     }
     return [
-      ...this.traverse_in_order(node.left),
-      ...this.traverse_in_order(node.right),
+      ...this.traverse_postorder(node.left),
+      ...this.traverse_postorder(node.right),
       node.key,
     ];
   }
-}
+  is_bst(node = this.root) {
+    const helper = (
+      node,
+      min = Number.MIN_SAFE_INTEGER,
+      max = Number.MAX_SAFE_INTEGER
+    ) => {
+      if (node === null) return true;
+      if (node.key <= min || node.key >= max) return false;
+      return (
+        helper(node.left, min, node.key) && helper(node.right, node.key, max)
+      );
+    };
 
-const treeData = [[1, 3, null], 2, [[null, 3, 4], 5, [6, 7, 8]]];
+    return helper(node);
+    // if (node === null) {
+    //   return [true, null, null];
+    // }
+
+    // const [is_bst_left, min_left, max_left] = this.is_bst(node.left);
+    // const [is_bst_right, min_right, max_right] = this.is_bst(node.right);
+
+    // const is_bst_node =
+    //   is_bst_left &&
+    //   is_bst_right &&
+    //   (max_left === null || node.key > max_left) &&
+    //   (min_right === null || node.key < min_right);
+
+    // const minKeys = [min_left, node.key, min_right].filter(
+    //   (item) => item !== null
+    // );
+    // const maxKeys = [max_left, node.key, max_right].filter(
+    //   (item) => item !== null
+    // );
+
+    // const min_key = Math.min.apply(null, minKeys);
+    // const max_key = Math.max.apply(null, maxKeys);
+
+    // console.log('new', node.key, min_key, max_key, is_bst_node);
+
+    // return [is_bst_node, min_key, max_key];
+  }
+}
+3;
+const treeData = [[-1, 1, null], 2, [[null, 3, 4], 5, [6, 7, 8]]];
 
 const binaryTree = new BinaryTree();
 
@@ -120,6 +160,7 @@ const traversalInOrder = binaryTree.traverse_in_order();
 const traversalPreOrder = binaryTree.traverse_preorder();
 const traversalPostOrder = binaryTree.traverse_postorder();
 const initialArray = binaryTree.to_array();
+const is_bst = binaryTree.is_bst();
 console.log(
   'height',
   treeHeight,
@@ -132,5 +173,7 @@ console.log(
   'postorder',
   traversalPostOrder,
   'initial data',
-  initialArray
+  initialArray,
+  'is bst',
+  is_bst
 );
