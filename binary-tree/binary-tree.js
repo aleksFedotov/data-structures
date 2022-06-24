@@ -16,11 +16,14 @@ class BinaryTree {
   }
 
   tree_to_array(node = this.root) {
-    if (!node) return [];
+    if (!node) return null;
+    if (!node.left && !node.right) {
+      return node.key;
+    }
     return [
-      [this.tree_to_array(node.left)],
+      this.tree_to_array(node.left),
       node.key,
-      [this.tree_to_array(node.right)],
+      this.tree_to_array(node.right),
     ];
   }
 

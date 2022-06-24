@@ -56,6 +56,10 @@ class BST extends BinaryTree {
     }
   }
 
+  remove(key) {
+    this.root = remove_node(this.root, key);
+  }
+
   list_all(node = this.root) {
     if (!node) return [];
 
@@ -74,6 +78,8 @@ class BST extends BinaryTree {
     const currTree = this.list_all(this.root);
     this.root = make_balanced_tree(currTree);
   }
+
+  find_successor_predecessor(key) {}
 }
 
 function insertNode(node, newNode) {
@@ -108,19 +114,76 @@ function check_balance(node) {
 }
 
 function make_balanced_tree(data, low = 0, high = null, parent = null) {
+  // initially set high as length of list  - 1
   if (high === null) high = data.length - 1;
+  // base case
   if (low > high) return null;
 
+  // find middle of array
   const mid = Math.floor((low + high) / 2);
 
+  // get value and jey from object in middle odf array
   const { key, value } = data[mid];
 
-  const root = new BSTNode(key, value);
-  root.parent = parent;
-  root.left = make_balanced_tree(data, low, mid - 1, root);
-  root.right = make_balanced_tree(data, mid + 1, high, root);
+  // create a new node and assing parent to new node
+  const node = new BSTNode(key, value);
+  node.parent = parent;
+  // recursively assing left and rignt subtree of new node.
+  // Left node will be created from data in left part of array as
+  // values there are always less then values of new node
+  // (due to the fatch thath out array is sorted in decreasing order)
+  // and roght side will be created form values in right side of array
+  node.left = make_balanced_tree(data, low, mid - 1, node);
+  node.right = make_balanced_tree(data, mid + 1, high, node);
 
-  return root;
+  return node;
+}
+
+function remove_node(node, key) {
+  if (!node) return node;
+  if (node.key > key) {
+    node.left = remove_node(node.left, key);
+  } else if (node.key < key) {
+    node.right = remove_node(node.right, key);
+  } else {
+    // the node is a leaf
+    if (!node.left && !node.right) {
+      // delete the node
+      return null;
+    }
+    // if there isn't a left child,
+    if (!node.left) {
+      // then replace node with right child
+      node.right.parent = node.parent;
+      return node.right;
+    }
+    // if there isn't a right child,
+    if (!node.right) {
+      // then replace node with left child
+      node.left.parent = node.parent;
+      return node.left;
+    }
+    //  node has two children
+    // finding min key in left subtrees of right subtree of node we need to delete
+
+    // replace node key with min key  by using  minAtRightSubTree function
+    node.key = minAtRightSubTree(node.right);
+
+    // delete the key from right subtree.
+    node.right = remove_node(node.right, node.key);
+  }
+
+  return node;
+}
+
+function minAtRightSubTree(node) {
+  // while there is a left child,
+  while (node.left) {
+    // traverse along left branches
+    node = node.left;
+  }
+
+  return node.key;
 }
 
 const aakash = new User('aakash', 'Aakash Rai', 'aakash@example.com');
@@ -133,26 +196,17 @@ const vishal = new User('vishal', 'Vishal Goel', 'vishal@example.com');
 
 const users = [aakash, biraj, hemanth, jadhesh, siddhant, sonaksh, vishal];
 const keys = [15, 25, 10, 7, 22, 17, 13, 5, 9, 27];
-
 const bst = new BST();
 
-users.forEach((user) => bst.insert(user.username, user));
-// keys.forEach((key) => bst.insert(key));
-// bst.insert(15);
-// bst.insert(25);
-// bst.insert(10);
-// bst.insert(7);
-// bst.insert(22);
-// bst.insert(17);
-// bst.insert(13);
-// bst.insert(5);
-// bst.insert(9);
-// bst.insert(27);
+// users.forEach((user) => bst.insert(user.username, user));
+keys.forEach((key) => bst.insert(key));
 
-// bst.display_tree();
+bst.display_tree();
+// // bst.rebalance_tree();
+bst.remove(7);
+// bst.rebalance_tree();
+bst.display_tree();
+console.log(bst.find(5).parent.key);
 
-console.log(bst.is_balanced());
-bst.display_tree();
-bst.rebalance_tree();
-bst.display_tree();
-console.log(bst.is_balanced());
+module.exports.BST = BST;
+module.exports.User = User;
