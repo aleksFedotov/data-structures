@@ -79,19 +79,28 @@ class BST extends BinaryTree {
     this.root = make_balanced_tree(currTree);
   }
 
-  find_successor_predecessor(key) {}
+  find_successor_predecessor(key) {
+    const node = this.find(key);
+
+    let suc = successor(node.right);
+    let pre = predecessor(node.left);
+
+    return { suc, pre };
+  }
 }
 
 function insertNode(node, newNode) {
   newNode.parent = node;
   if (node.key > newNode.key) {
     if (!node.left) {
+      newNode.parent = node;
       node.left = newNode;
     } else {
       insertNode(node.left, newNode);
     }
   } else if (node.key < newNode.key) {
     if (!node.right) {
+      newNode.parent = node;
       node.right = newNode;
     } else {
       insertNode(node.right, newNode);
@@ -167,7 +176,7 @@ function remove_node(node, key) {
     // finding min key in left subtrees of right subtree of node we need to delete
 
     // replace node key with min key  by using  minAtRightSubTree function
-    node.key = minAtRightSubTree(node.right);
+    node.key = successor(node.right);
 
     // delete the key from right subtree.
     node.right = remove_node(node.right, node.key);
@@ -176,7 +185,7 @@ function remove_node(node, key) {
   return node;
 }
 
-function minAtRightSubTree(node) {
+function successor(node) {
   // while there is a left child,
   while (node.left) {
     // traverse along left branches
@@ -185,28 +194,41 @@ function minAtRightSubTree(node) {
 
   return node.key;
 }
+function predecessor(node) {
+  // while there is a left child,
+  while (node.right) {
+    // traverse along left branches
+    node = node.right;
+  }
 
-const aakash = new User('aakash', 'Aakash Rai', 'aakash@example.com');
-const biraj = new User('biraj', 'Biraj Das', 'biraj@example.com');
-const hemanth = new User('hemanth', 'Hemanth Jain', 'hemanth@example.com');
-const jadhesh = new User('jadhesh', 'Jadhesh Verma', 'jadhesh@example.com');
-const siddhant = new User('siddhant', 'Siddhant Sinha', 'siddhant@example.com');
-const sonaksh = new User('sonaksh', 'Sonaksh Kumar', 'sonaksh@example.com');
-const vishal = new User('vishal', 'Vishal Goel', 'vishal@example.com');
+  return node.key;
+}
 
-const users = [aakash, biraj, hemanth, jadhesh, siddhant, sonaksh, vishal];
-const keys = [15, 25, 10, 7, 22, 17, 13, 5, 9, 27];
-const bst = new BST();
+// const aakash = new User('aakash', 'Aakash Rai', 'aakash@example.com');
+// const biraj = new User('biraj', 'Biraj Das', 'biraj@example.com');
+// const hemanth = new User('hemanth', 'Hemanth Jain', 'hemanth@example.com');
+// const jadhesh = new User('jadhesh', 'Jadhesh Verma', 'jadhesh@example.com');
+// const siddhant = new User('siddhant', 'Siddhant Sinha', 'siddhant@example.com');
+// const sonaksh = new User('sonaksh', 'Sonaksh Kumar', 'sonaksh@example.com');
+// const vishal = new User('vishal', 'Vishal Goel', 'vishal@example.com');
 
-// users.forEach((user) => bst.insert(user.username, user));
-keys.forEach((key) => bst.insert(key));
+// const users = [aakash, biraj, hemanth, jadhesh, siddhant, sonaksh, vishal];
+// const keys = [15, 25, 10, 7, 22, 17, 13, 5, 9, 27];
+// const bst = new BST();
 
-bst.display_tree();
+// // users.forEach((user) => bst.insert(user.username, user));
+// keys.forEach((key) => bst.insert(key));
+
+// bst.display_tree();
+// // // bst.rebalance_tree();
+// // bst.remove(7);
 // // bst.rebalance_tree();
-bst.remove(7);
-// bst.rebalance_tree();
-bst.display_tree();
-console.log(bst.find(5).parent.key);
+// // bst.display_tree();
+// // console.log(bst.find(5).parent.key);
+// console.log(bst.list_all());
+// console.log(bst.traverse_in_order());
+
+// console.log(bst.find_successor_predecessor(15));
 
 module.exports.BST = BST;
 module.exports.User = User;

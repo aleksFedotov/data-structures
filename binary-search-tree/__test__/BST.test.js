@@ -9,7 +9,7 @@ const sonaksh = new User('sonaksh', 'Sonaksh Kumar', 'sonaksh@example.com');
 const vishal = new User('vishal', 'Vishal Goel', 'vishal@example.com');
 
 const users = [aakash, biraj, hemanth, jadhesh, siddhant, sonaksh, vishal];
-const keys = [15, 25, 10, 7, 22, 17, 13, 5, 9, 27];
+
 const keysListAll = keys
   .sort((a, b) => a - b)
   .map((item) => {
