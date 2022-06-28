@@ -11,8 +11,23 @@ class BinaryTree {
     this.root = null;
   }
 
+  #parse_array(data) {
+    let node;
+    if (Array.isArray(data) && data.length === 3) {
+      node = new BinaryTreeNode(data[1]);
+      node.left = parse_array(data[0]);
+      node.right = parse_array(data[2]);
+    } else if (data === null) {
+      return null;
+    } else {
+      node = new BinaryTreeNode(data);
+    }
+
+    return node;
+  }
+
   array_to_tree(data) {
-    this.root = parse_array(data);
+    this.root = this.#parse_array(data);
   }
 
   tree_to_array(node = this.root) {
@@ -100,21 +115,6 @@ class BinaryTree {
 
     return helper(node);
   }
-}
-
-function parse_array(data) {
-  let node;
-  if (Array.isArray(data) && data.length === 3) {
-    node = new BinaryTreeNode(data[1]);
-    node.left = parse_array(data[0]);
-    node.right = parse_array(data[2]);
-  } else if (data === null) {
-    return null;
-  } else {
-    node = new BinaryTreeNode(data);
-  }
-
-  return node;
 }
 
 module.exports = BinaryTree;
