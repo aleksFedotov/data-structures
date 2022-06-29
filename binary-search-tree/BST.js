@@ -43,11 +43,15 @@ class BST extends BinaryTree {
 
   #remove_node(node, key) {
     if (!node) return node;
-    if (node.key > key) {
-      node.left = this.#remove_node(node.left, key);
-    } else if (node.key < key) {
-      node.right = this.#remove_node(node.right, key);
-    } else {
+    //  If the key to be deleted is smaller than
+    // the node's key, then it lies in left subtree
+    if (node.key > key) node.left = this.#remove_node(node.left, key);
+    // If the key to be deleted is greater than the
+    // node's key, then it lies in right subtree
+    else if (node.key < key) node.right = this.#remove_node(node.right, key);
+    // if key is same as node's key, then this is the node
+    // to be deleted
+    else {
       // the node is a leaf
       if (!node.left && !node.right) {
         // delete the node
@@ -65,13 +69,12 @@ class BST extends BinaryTree {
         node.left.parent = node.parent;
         return node.left;
       }
-      //  node has two children
-      // finding min key in left subtrees of right subtree of node we need to delete
+      // node with two children: Get the inorder
+      // successor (smallest in the right subtree)
 
-      // replace node key with min key  by using  minAtRightSubTree function
       node.key = this.successor(node.right);
 
-      // delete the key from right subtree.
+      // Delete the inorder successor
       node.right = this.#remove_node(node.right, node.key);
     }
 
@@ -172,7 +175,7 @@ class BST extends BinaryTree {
   }
 
   remove(key) {
-    this.root = remove_node(this.root, key);
+    this.root = this.#remove_node(this.root, key);
   }
 
   list_all(node = this.root) {
@@ -201,6 +204,20 @@ class BST extends BinaryTree {
     let pre = predecessor(node.left);
 
     return { suc, pre };
+  }
+
+  lca(n1, n2) {
+    return this.#lca_helper(n1, n2, this.root).key;
+  }
+
+  #lca_helper(n1, n2, node) {
+    if (!node) return null;
+    if (node.key > n1 && node.key > n2)
+      return this.#lca_helper(n1, n2, node.left);
+
+    if (node.key < n1 && node.key < n2)
+      return this.#lca_helper(n1, n2, node.right);
+    return node;
   }
 }
 

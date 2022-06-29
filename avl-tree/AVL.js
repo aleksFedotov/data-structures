@@ -125,45 +125,43 @@ class AVLTree extends BST {
     }
   }
   #delete_node(node, key) {
-    if (node == null) return node;
+    if (!node) return node;
 
     // If the key to be deleted is smaller than
     // the node's key, then it lies in left subtree
-    if (key < node.key) node.left = this.#delete_node(node.left, key);
+    if (node.key > key) node.left = this.#delete_node(node.left, key);
     // If the key to be deleted is greater than the
     // node's key, then it lies in right subtree
-    else if (key > node.key) node.right = this.#delete_node(node.right, key);
+    else if (node.key < key) node.right = this.#delete_node(node.right, key);
     // if key is same as node's key, then this is the node
     // to be deleted
     else {
-      // node with only one child or no child
-      if (node.left == null || node.right == null) {
-        let temp = null;
-        if (temp == node.left) temp = node.right;
-        else temp = node.left;
-
-        // No child case
-        if (temp == null) {
-          temp = node;
-          node = null;
-        } // One child case
-        else node = temp; // Copy the contents of
-        // the non-empty child
-      } else {
-        // node with two children: Get the inorder
-        // successor (smallest in the right subtree)
-        let temp = this.successor(node.right);
-
-        // Copy the inorder successor's data to this node
-        node.key = temp.key;
-
-        // Delete the inorder successor
-        node.right = this.#delete_node(node.right, temp.key);
+      // the node is a leaf
+      if (!node.left && !node.right) {
+        // delete the node
+        return null;
       }
-    }
+      // if there isn't a left child,
+      if (!node.left) {
+        // then replace node with right child
+        node.right.parent = node.parent;
+        return node.right;
+      }
+      // if there isn't a right child,
+      if (!node.right) {
+        // then replace node with left child
+        node.left.parent = node.parent;
+        return node.left;
+      }
 
-    // If the tree had only one node then return
-    if (node == null) return node;
+      // node with two children: Get the inorder
+      // successor (smallest in the right subtree)
+
+      node.key = this.successor(node.right);
+
+      // Delete the inorder successor
+      node.right = this.#delete_node(node.right, node.key);
+    }
 
     // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
     node.height =
@@ -197,24 +195,5 @@ class AVLTree extends BST {
     return node;
   }
 }
-
-const avl = new AVLTree();
-avl.insert(9);
-avl.insert(5);
-avl.insert(10);
-avl.insert(0);
-avl.insert(6);
-avl.insert(11);
-avl.insert(-1);
-avl.insert(1);
-avl.insert(2);
-
-avl.display_tree();
-console.log(avl.traverse_preorder());
-
-avl.delete(10);
-
-avl.display_tree();
-console.log(avl.traverse_preorder());
 
 module.exports = AVLTree;

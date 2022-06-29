@@ -115,6 +115,32 @@ class BinaryTree {
 
     return helper(node);
   }
+
+  lca(n1, n2) {
+    return this.#lca_helper(n1, n2, this.root).key;
+  }
+
+  #lca_helper(n1, n2, node) {
+    // Base case
+    if (node == null) return null;
+
+    // If either n1 or n2 matches with root's key, report
+    // the presence by returning root (Note that if a key is
+    // ancestor of other, then the ancestor key becomes LCA
+    if (node.key == n1 || node.key == n2) return node;
+
+    // Look for keys in left and right subtrees
+    let left_lca = this.#lca_helper(n1, n2, node.left);
+    let right_lca = this.#lca_helper(n1, n2, node.right);
+
+    // If both of the above calls return Non-NULL, then one key
+    // is present in once subtree and other is present in other,
+    // So this node is the LCA
+    if (left_lca && right_lca) return node;
+
+    // Otherwise check if left subtree or right subtree is LCA
+    return left_lca != null ? left_lca : right_lca;
+  }
 }
 
 module.exports = BinaryTree;
