@@ -221,5 +221,42 @@ class BST extends BinaryTree {
   }
 }
 
+const keys = [
+  'a',
+  'b',
+  'c',
+  'd',
+  'e',
+  'f',
+  'g',
+  'h',
+  'i',
+  'j',
+  'k',
+  'l',
+  'm',
+  'n',
+  'o',
+  'p',
+  'q',
+  'r',
+  's',
+  't',
+  'u',
+  'v',
+  'w',
+  'x',
+  'y',
+  'z',
+];
+
+const bst = new BST();
+keys.forEach((key) => bst.insert(key));
+bst.rebalance_tree();
+bst.display_tree();
+console.log(bst.traverse_in_order());
+console.log(bst.traverse_preorder());
+console.log(bst.traverse_postorder());
+
 module.exports.BST = BST;
 module.exports.User = User;
