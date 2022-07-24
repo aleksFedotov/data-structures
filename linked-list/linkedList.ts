@@ -1,11 +1,16 @@
 class Node {
+  value: number;
+  next: Node | null;
   constructor(value) {
     this.value = value;
     this.next = null;
   }
 }
 
-class LinkedList {
+export default class LinkedList {
+  head: Node | null;
+  tail: Node | null;
+  length: number;
   constructor() {
     this.head = null;
     this.tail = null;
@@ -78,6 +83,26 @@ class LinkedList {
     return this.head;
   }
 
+  find(value) {
+    if (!this.head) return false;
+    let currentNode = this.head;
+    while (currentNode) {
+      if (currentNode.value === value) return currentNode.value;
+      currentNode = currentNode.next;
+    }
+    return false;
+  }
+
+  findHashTable(key) {
+    if (!this.head) return false;
+    let currentNode = this.head;
+    while (currentNode) {
+      if (currentNode.value[0] === key) return currentNode.value[1];
+      currentNode = currentNode.next;
+    }
+    return false;
+  }
+
   reverse() {
     if (!this.head) return null;
     if (this.length === 1) return this.head;
@@ -118,5 +143,3 @@ class LinkedList {
     return currentNode;
   }
 }
-
-module.exports = LinkedList;

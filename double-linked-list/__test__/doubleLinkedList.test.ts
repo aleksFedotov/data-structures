@@ -1,31 +1,31 @@
-const LinkedList = require('../linkedList.js');
+import DoubleLinkedList from '../doubleLinkList';
 
-const linkedList = new LinkedList();
+const doubleLinkedList = new DoubleLinkedList();
 
 test('should return empty arr if linked arr is empty', () => {
-  const arr = linkedList.printList();
+  const arr = doubleLinkedList.printList();
   expect(arr).toStrictEqual([]);
 });
 
 test('should append', () => {
-  linkedList.append(10);
-  linkedList.append(6);
-  expect(linkedList.printList()).toStrictEqual([10, 6]);
+  doubleLinkedList.append(10);
+  doubleLinkedList.append(6);
+  expect(doubleLinkedList.printList()).toStrictEqual([10, 6]);
 });
 
 test('should prepend', () => {
-  linkedList.prepend(99);
-  expect(linkedList.printList()).toStrictEqual([99, 10, 6]);
+  doubleLinkedList.prepend(99);
+  expect(doubleLinkedList.printList()).toStrictEqual([99, 10, 6]);
 });
 test('should shift', () => {
-  linkedList.prepend(23);
-  expect(linkedList.printList()).toStrictEqual([23, 99, 10, 6]);
-  linkedList.shift();
-  expect(linkedList.printList()).toStrictEqual([99, 10, 6]);
+  doubleLinkedList.prepend(23);
+  expect(doubleLinkedList.printList()).toStrictEqual([23, 99, 10, 6]);
+  doubleLinkedList.shift();
+  expect(doubleLinkedList.printList()).toStrictEqual([99, 10, 6]);
 });
 
 test('should insert', () => {
-  const list = new LinkedList();
+  const list = new DoubleLinkedList();
   list.append(99);
   list.append(10);
   list.append(6);
@@ -35,7 +35,7 @@ test('should insert', () => {
 });
 
 test('should remove', () => {
-  const list = new LinkedList();
+  const list = new DoubleLinkedList();
   list.append(99);
   list.append(33);
   list.append(10);
@@ -47,7 +47,7 @@ test('should remove', () => {
 });
 
 test('should reverse', () => {
-  const list = new LinkedList();
+  const list = new DoubleLinkedList();
   list.append(99);
   list.append(33);
   list.append(10);

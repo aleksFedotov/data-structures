@@ -1,4 +1,7 @@
-class Node {
+class DLLNode {
+  value: number;
+  next: null | DLLNode;
+  prev: null | DLLNode;
   constructor(value) {
     this.value = value;
     this.next = null;
@@ -6,7 +9,10 @@ class Node {
   }
 }
 
-class DoubleLinkedList {
+export default class DoubleLinkedList {
+  head: null | DLLNode;
+  tail: null | DLLNode;
+  length: number;
   constructor() {
     this.head = null;
     this.tail = null;
@@ -14,7 +20,7 @@ class DoubleLinkedList {
   }
 
   append(value) {
-    const newNode = new Node(value);
+    const newNode = new DLLNode(value);
     if (this.length === 0) {
       this.head = newNode;
       this.tail = newNode;
@@ -28,7 +34,7 @@ class DoubleLinkedList {
   }
 
   prepend(value) {
-    const newNode = new Node(value);
+    const newNode = new DLLNode(value);
     newNode.next = this.head;
     this.head.prev = newNode;
     this.head = newNode;
@@ -54,7 +60,7 @@ class DoubleLinkedList {
   }
 
   insert(ind, value) {
-    const newNode = new Node(value);
+    const newNode = new DLLNode(value);
     if (ind === 0) {
       this.prepend(value);
       return;
@@ -132,14 +138,3 @@ class DoubleLinkedList {
     return currentNode;
   }
 }
-
-const list = new DoubleLinkedList();
-list.append(99);
-list.append(10);
-list.append(6);
-list.insert(1, 33);
-list.insert(3, 56);
-
-console.log(list.printList());
-
-module.exports = DoubleLinkedList;

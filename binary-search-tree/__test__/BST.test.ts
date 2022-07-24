@@ -1,4 +1,4 @@
-const { BST, User } = require('../BST.js');
+import { BST, User } from '../BST';
 
 const aakash = new User('aakash', 'Aakash Rai', 'aakash@example.com');
 const biraj = new User('biraj', 'Biraj Das', 'biraj@example.com');

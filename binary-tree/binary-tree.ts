@@ -1,4 +1,7 @@
 class BinaryTreeNode {
+  key: number;
+  left: BinaryTreeNode | null;
+  right: BinaryTreeNode | null;
   constructor(key) {
     this.key = key;
     this.left = null;
@@ -6,7 +9,8 @@ class BinaryTreeNode {
   }
 }
 
-class BinaryTree {
+export default class BinaryTree {
+  root: BinaryTreeNode | null;
   constructor() {
     this.root = null;
   }
@@ -101,7 +105,7 @@ class BinaryTree {
   }
 
   DFtravelrsal() {
-    if (!this.root) retru;
+    if (!this.root) return [];
     const stack = [this.root];
     const res = [];
     while (stack.length > 0) {
@@ -271,23 +275,3 @@ class BinaryTree {
     return left_lca ? left_lca : right_lca;
   }
 }
-
-const binaryTree = new BinaryTree();
-const treeData = [[1, 3, null], 2, [[null, 3, 4], 5, [6, 7, 8]]];
-binaryTree.array_to_tree(treeData);
-binaryTree.display_tree();
-console.log(binaryTree.DFtravelrsal());
-
-console.log(binaryTree.BFtraversal());
-console.log(binaryTree.includes_recursive(3));
-console.log(binaryTree.includes_recursive(10));
-console.log(binaryTree.includes_df(3));
-console.log(binaryTree.includes_df(10));
-console.log(binaryTree.tree_sum_recursive());
-console.log(binaryTree.tree_sum_bf());
-console.log(binaryTree.min_recursive());
-console.log(binaryTree.min_df());
-console.log(binaryTree.max_recursive());
-console.log(binaryTree.max_bf());
-console.log(binaryTree.max_path_sum());
-module.exports = BinaryTree;

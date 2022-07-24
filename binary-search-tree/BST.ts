@@ -1,22 +1,33 @@
-const BinaryTree = require('../binary-tree/binary-tree.js');
+import BinaryTree from '../binary-tree/binary-tree';
 
-class User {
+export class User {
+  username: string;
+  name: string;
+  email: string;
   constructor(username, name, email) {
-    (this.username = username), (this.name = name), (this.email = email);
+    this.username = username;
+    this.name = name;
+    this.email = email;
   }
 }
 
 class BSTNode {
+  key: any;
+  value: User | any;
+  left: BSTNode | null;
+  right: BSTNode | null;
+  parent: BSTNode | null;
   constructor(key, value = null) {
-    (this.key = key),
-      (this.value = value),
-      (this.left = null),
-      (this.right = null),
-      (this.parent = null);
+    this.key = key;
+    this.value = value;
+    this.left = null;
+    this.right = null;
+    this.parent = null;
   }
 }
 
-class BST extends BinaryTree {
+export class BST extends BinaryTree {
+  root: null | BSTNode;
   constructor() {
     super();
     this.root = null;
@@ -140,7 +151,7 @@ class BST extends BinaryTree {
     return node.key;
   }
 
-  insert(key, value) {
+  insert(key, value = null) {
     const newNode = new BSTNode(key, value);
 
     if (!this.root) {
@@ -165,7 +176,7 @@ class BST extends BinaryTree {
   }
 
   update(key, value) {
-    const target = this.find(key, this.node);
+    const target = this.find(key, this.root);
 
     if (target) {
       target.value = value;
@@ -200,8 +211,8 @@ class BST extends BinaryTree {
   find_successor_predecessor(key) {
     const node = this.find(key);
 
-    let suc = successor(node.right);
-    let pre = predecessor(node.left);
+    let suc = this.successor(node.right);
+    let pre = this.predecessor(node.left);
 
     return { suc, pre };
   }
@@ -220,43 +231,3 @@ class BST extends BinaryTree {
     return node;
   }
 }
-
-const keys = [
-  'a',
-  'b',
-  'c',
-  'd',
-  'e',
-  'f',
-  'g',
-  'h',
-  'i',
-  'j',
-  'k',
-  'l',
-  'm',
-  'n',
-  'o',
-  'p',
-  'q',
-  'r',
-  's',
-  't',
-  'u',
-  'v',
-  'w',
-  'x',
-  'y',
-  'z',
-];
-
-const bst = new BST();
-keys.forEach((key) => bst.insert(key));
-bst.rebalance_tree();
-bst.display_tree();
-console.log(bst.traverse_in_order());
-console.log(bst.traverse_preorder());
-console.log(bst.traverse_postorder());
-
-module.exports.BST = BST;
-module.exports.User = User;

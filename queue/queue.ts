@@ -59,13 +59,3 @@ export default class Queue {
     return arr;
   }
 }
-
-const queue = new Queue();
-
-queue.enqueue(4);
-queue.enqueue(1);
-queue.enqueue(78);
-console.log(queue.printQueue());
-queue.dequeue();
-
-console.log(queue.printQueue());

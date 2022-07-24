@@ -1,8 +1,8 @@
-const AVL = require('../AVL.js');
+import AVLTree from '../AVL';
 
 const keys = [9, 5, 10, 0, 6, 11, -1, 1, 2];
 
-const avl = new AVL();
+const avl = new AVLTree();
 
 keys.forEach((key) => avl.insert(key));
 

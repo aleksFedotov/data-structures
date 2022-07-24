@@ -31,10 +31,3 @@ class HashTable {
     return data;
   }
 }
-
-const hash = new HashTable(2);
-
-hash.set('grapes', 10000);
-hash.set('apples', 54);
-console.log(hash.get('grapes'));
-console.log(hash);

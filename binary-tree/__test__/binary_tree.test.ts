@@ -1,4 +1,4 @@
-const BinaryTree = require('../binary-tree.js');
+import BinaryTree from '../binary-tree';
 
 const binaryTree = new BinaryTree();
 const treeData = [[1, 3, null], 2, [[null, 3, 4], 5, [6, 7, 8]]];

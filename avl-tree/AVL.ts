@@ -1,6 +1,11 @@
-const { BST } = require('../binary-search-tree/BST.js');
+import { BST } from '../binary-search-tree/BST';
 
 class AVLnode {
+  key: number;
+  value: any;
+  height: number;
+  left: AVLnode | null;
+  right: AVLnode | null;
   constructor(key, value = null) {
     this.key = key;
     this.value = null;
@@ -10,7 +15,9 @@ class AVLnode {
   }
 }
 
-class AVLTree extends BST {
+export default class AVLTree extends BST {
+  // @ts-ignore
+  root: AVLnode | null;
   constructor() {
     super();
     this.root = null;
@@ -195,5 +202,3 @@ class AVLTree extends BST {
     return node;
   }
 }
-
-module.exports = AVLTree;

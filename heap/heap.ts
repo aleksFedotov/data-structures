@@ -255,25 +255,3 @@ export class MaxHeap {
     }
   }
 }
-
-const maxHeap = new MinHeap();
-
-maxHeap.add(11);
-
-maxHeap.add(4);
-
-maxHeap.add(67);
-
-maxHeap.add(34);
-
-maxHeap.add(21);
-maxHeap.add(14);
-
-maxHeap.add(3);
-
-console.log(maxHeap.printArray());
-maxHeap.poll();
-console.log(maxHeap.printArray());
-
-maxHeap.removeByIndex(3);
-console.log(maxHeap.printArray());
