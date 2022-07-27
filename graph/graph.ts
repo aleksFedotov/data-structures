@@ -95,7 +95,7 @@ export default class Graph {
   dfsRecursive(start) {
     const visited = {};
     const result = [];
-    const adjacencyList = this.adjacencyList;
+
     const dfs = (vertex) => {
       if (!vertex) return null;
       visited[vertex] = true;
@@ -110,20 +110,3 @@ export default class Graph {
     return result;
   }
 }
-
-const graph = new Graph();
-graph.addEdge(1, 2);
-graph.addEdge(1, 3);
-graph.addEdge(1, 4);
-graph.addEdge(5, 2);
-graph.addEdge(6, 3);
-graph.addEdge(7, 3);
-graph.addEdge(8, 4);
-graph.addEdge(9, 5);
-graph.addEdge(10, 6);
-
-graph.printGraph();
-
-console.log(graph.bfs(1));
-console.log(graph.dfsIterative(1));
-console.log(graph.dfsRecursive(1));
