@@ -1,5 +1,5 @@
 class StackNode {
-  value: number;
+  value: number | string;
   next: null | StackNode;
   constructor(value: number) {
     this.value = value;
@@ -45,8 +45,12 @@ export default class Stack {
     return holdingPointer;
   }
 
+  isEmpty() {
+    return this.length === 0;
+  }
+
   printStack() {
-    const arr: number[] = [];
+    const arr: any[] = [];
     if (!this.top) return arr;
     let currentNode: null | StackNode = this.top;
     while (currentNode) {

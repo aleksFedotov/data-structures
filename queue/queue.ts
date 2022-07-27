@@ -1,5 +1,5 @@
 class QueueNode {
-  value: number;
+  value: number | string;
   next: null | QueueNode;
   constructor(value) {
     this.value = value;
@@ -47,8 +47,12 @@ export default class Queue {
     return holdingPointer;
   }
 
+  isEmpty() {
+    return this.length === 0;
+  }
+
   printQueue() {
-    const arr: number[] = [];
+    const arr: any[] = [];
     if (!this.first) return arr;
     let currentNode = this.first;
     while (currentNode) {
